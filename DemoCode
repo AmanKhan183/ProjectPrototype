@@ -1,0 +1,31 @@
+// Define the pin connections
+int soilMoisturePin = A2;
+int relayControlPin = D2;
+
+// Define the dryness threshold for your soil.
+int dryThreshold = 700;
+
+void setup() {
+  // Set up the control pin as output
+  pinMode(relayControlPin, OUTPUT);
+  // Start with the pump off
+  digitalWrite(relayControlPin, HIGH); // for active low relay, pump off means HIGH state
+}
+
+void loop() {
+  // Read the soil moisture level
+  int soilMoisture = analogRead(soilMoisturePin);
+
+  // If the soil is too dry
+  if (soilMoisture > dryThreshold) {
+    // Turn on the pump
+    digitalWrite(relayControlPin, LOW); // for active low relay, pump on means LOW state
+  } else {
+    // Otherwise, turn off the pump
+    digitalWrite(relayControlPin, HIGH); // for active low relay, pump off means HIGH state
+  }
+
+  // Delay for a bit before checking again
+  delay(1000);
+}
+
